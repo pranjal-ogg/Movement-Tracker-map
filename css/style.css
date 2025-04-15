@@ -1,0 +1,378 @@
+/* Main layout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f8f9fa;
+}
+
+#map {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 18px;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.navbar-logo {
+    height: 32px;
+    width: auto;
+}
+
+/* Navbar Controls */
+.navbar-controls {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    justify-content: flex-end;
+}
+
+/* Time select in navbar */
+.navbar .time-select {
+    width: 150px;
+    height: 38px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0 14px;
+    font-size: 14px;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.navbar .time-select:hover {
+    border-color: #4285f4;
+}
+
+.navbar .time-select:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15);
+}
+
+/* Speed control in navbar */
+.navbar .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.navbar .speed-control label {
+    font-size: 14px;
+    color: #1a1a1a;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.navbar .speed-slider {
+    width: 140px;
+    height: 4px;
+    -webkit-appearance: none;
+    background: #e2e8f0;
+    border-radius: 4px;
+    outline: none;
+}
+
+.navbar .speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #4285f4;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .speed-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #4285f4;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .speed-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    background: #3367d6;
+}
+
+.navbar .speed-slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    background: #3367d6;
+}
+
+/* Simulation buttons in navbar */
+.navbar .simulation-buttons {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.navbar .simulation-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #4285f4;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: 120px;
+    text-align: center;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar .simulation-button:hover {
+    background: #3367d6;
+    transform: translateY(-1px);
+}
+
+.navbar .simulation-button:active {
+    transform: translateY(0);
+}
+
+.navbar .simulation-button.reset {
+    background: #dc3545;
+    min-width: 80px;
+}
+
+.navbar .simulation-button.reset:hover {
+    background: #c82333;
+}
+
+/* Error message */
+.location-error {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #dc3545;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 2000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 14px;
+    animation: slideIn 0.3s ease-out;
+    max-width: 90%;
+    text-align: center;
+    font-weight: 500;
+}
+
+@keyframes slideIn {
+    from {
+        top: -50px;
+        opacity: 0;
+    }
+    to {
+        top: 80px;
+        opacity: 1;
+    }
+}
+
+/* Leaflet overrides */
+.leaflet-routing-container {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.leaflet-routing-container.leaflet-routing-container-hide {
+    display: none;
+}
+
+.leaflet-routing-alt {
+    max-height: none;
+}
+
+.leaflet-routing-alt-minimized {
+    display: none;
+}
+
+.leaflet-routing-line {
+    stroke-width: 4;
+    stroke-opacity: 0.8;
+    stroke: #4285f4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Popup styling */
+.leaflet-popup-content-wrapper {
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.15);
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    min-width: 260px;
+}
+
+.leaflet-popup-tip-container {
+    margin-top: -1px;
+}
+
+/* Taxi info popup */
+.taxi-info-popup {
+    padding: 12px;
+}
+
+.taxi-info-popup h2 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    color: #1a1a1a;
+}
+
+.taxi-info-popup p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.taxi-info-popup .info-label {
+    font-weight: 500;
+    color: #2d3748;
+}
+
+/* Responsive Design */
+@media (max-width: 1280px) {
+    .navbar-controls {
+        gap: 16px;
+    }
+
+    .navbar .simulation-button {
+        min-width: 110px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar {
+        height: auto;
+        padding: 12px 24px;
+    }
+
+    .navbar-controls {
+        flex-wrap: wrap;
+        gap: 12px;
+        width: auto;
+    }
+
+    .navbar .speed-control {
+        order: 2;
+    }
+
+    .navbar .time-select {
+        order: 1;
+    }
+
+    .navbar .simulation-buttons {
+        order: 3;
+        margin-left: auto;
+    }
+
+    #map {
+        top: 72px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 12px 16px;
+    }
+
+    .navbar-brand {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .navbar-controls {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .navbar .time-select {
+        width: 100%;
+    }
+
+    .navbar .speed-control {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .navbar .speed-slider {
+        flex: 1;
+        margin: 0 12px;
+    }
+
+    .navbar .simulation-buttons {
+        width: 100%;
+        gap: 8px;
+        margin-left: 0;
+    }
+
+    .navbar .simulation-button {
+        flex: 1;
+        min-width: 0;
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    #map {
+        top: 190px;
+    }
+} 
